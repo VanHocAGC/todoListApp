@@ -3,6 +3,9 @@
   padding: 0px;
   box-sizing: border-box;
 }
+body{
+  overflow: hidden;
+}
 
 a{
   text-decoration: none;
@@ -20,6 +23,9 @@ p{
 }
 input,i,p,h5{
   font-size:1.4rem;
+}
+.hidden{
+  display: none;
 }
 
 .login-page{
@@ -46,7 +52,6 @@ input,i,p,h5{
   height: 400px;
   width: 400px;
   background-color: transparent;
-
   border-radius:10px;
   margin-left: 600px;
   display:flex;
@@ -82,6 +87,7 @@ input,i,p,h5{
   outline: none;
   color:#666;
   font-weight:500;
+  background-color: transparent;
 }
 .login-input div p:before{
   height:2px;
@@ -108,12 +114,12 @@ input,i,p,h5{
   justify-content:space-between;
   margin-top:20px;
 }
+
 h5{
   font-size:1.4rem;
   font-weight: 700;
   color: #777;
   transition: transform 0.2s ease-in-out;
-
 }
 h5:hover{
   cursor: pointer;
@@ -133,9 +139,199 @@ h5:hover{
 .login-box>button:hover{
   background-position: right;
 }
+.login-input div span{
+  display:none;
+  position:absolute;
+  bottom: -20px;
+  left: 0px;
+  font-weight: 700;
+}
+.login-input .valid .right-message{
+  display:block;
+  color:#00cba9;
+}
+.login-input .invalid .wrong-message{
+  display:block;
+  color: red;
+}
+.login-input .invalid p:before{
+  background-color:red;
+}
+.login-input .invalid i{
+  color:red;
+}
+.retake-box-show{
+  transform:translateX(-380%);
+  transition:transform 0.6s ease;
+}
+.signup-box-show{
+  transform: translateY(-190%);
+  transition:transform 0.6s ease;
+}
+.login-box-hide{
+  opacity: 0;
+  transition:opacity 0.6s linear;
+}
+.retake-page{
+  position: absolute;
+  top: 0;
+  right:-100%;
+}
+.retake{
+  transition:transform 0.6 linear !important;
+}
+.login-success{
+  height: 100vh;
+  width: 100% ;
+  position: absolute; 
+  z-index: 123; 
+  background-color: #abfdf6d0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.login-success div{
+  height: 200px;
+  width: 500px;
+  background-color:#f3f8fe;
+  border-radius:10px;
+  box-shadow:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.login-success div p{
+  font-size:3.4rem;
+}
+.login-success div p i{
+  color: #00cba9;
+  font-size: 3.4rem;
+}
+.login-fail-format{
+  height: 100vh;
+  width: 100% ;
+  position: absolute; 
+  z-index: 123; 
+  background-color: #ffa6a6d0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.login-fail-format div{
+  height: 200px;
+  width: 500px;
+  background-color:#f3f8fe;
+  border-radius:10px;
+  box-shadow:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.login-fail-format div p{
+  font-size:3.4rem;
+  
+}
+.login-fail-format div p i{
+  color: #ff534d;
+  font-size: 3.4rem;
+  
+}
+.login-fail{
+  height: 100vh;
+  width: 100% ;
+  position: absolute; 
+  z-index: 123; 
+  background-color: #ffa6a6d0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.login-fail div{
+  height: 200px;
+  width: 500px;
+  background-color:#f3f8fe;
+  border-radius:10px;
+  box-shadow:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align: center;
+}
+.login-fail div p{
+  font-size:3.4rem;
+  text-align: center;
+}
+.login-fail div p i{
+  color: #ff534d;
+  font-size: 3.4rem;
+}
 /* main page */
 
 .light{
   display:none;
 }
+.main-page{
+  background-color: #f3f8fe;
+  height:100vh;
+}
+.container{
+  display:flex;
+  flex-direction: column;
+  
+}
+.container h1{
+  font-size:4.5rem;
+  text-align: center;
+  margin: 30px 0px;
+}
+.table{
+  font-size:1.4rem;
+  width: 90% ;
+  margin: 0px auto;
+}
+.list-item td , .list-item th{
+  padding: 20px 0px !important;
+ 
+}
+.list-item{
+  border-left: 2px solid #00cba9;
+  
+  border-bottom: 10px solid transparent;
+  border-radius:0px 5px 5px 0px;
+}
 
+.list-image{
+  position:absolute;
+  height:30%;
+  z-index: 3;
+}
+.list-image-left{
+  bottom: 0px;
+  left: 0px;
+}
+.list-image-right{
+  bottom: 0px;
+  right: 0px;
+}
+.footer{
+  position:absolute;
+  bottom: -100px;
+  z-index: 2;
+}
+
+.add-task{
+  width:150px;
+  height:40px;
+  align-self: flex-end;
+  margin:0px 100px 20px 0px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background-image: linear-gradient(to right,#32bef8 , #38d39f,#32be8f);
+  background-size: 200%;
+  color: #fff;
+  border-radius: 5px;
+  transition: 0.5s ease;
+}
+.add-task:hover{
+  background-position: right;
+}

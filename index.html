@@ -49,48 +49,46 @@
             <div class="month-list"></div>
         </div>
     </div>
-    <div class="container">
+    <div class="main-page">
+      <div class="container">
         <h1>Todo List</h1>
-        <table class="table">
+        <img class="list-image list-image-left" src="./image/undraw_next_tasks_iubr.svg" alt="left image">
+        <img class="list-image list-image-right" src="./image/undraw_percentages_0rur.svg" alt="right image">
+        <button class="add-task">Add task</button>
+        <table class="table table-hover">
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col" colspan="2">Tên công việc</th>
+                <th scope="col">Ngày hết hạn </th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Sửa</th>
+                <th scope="col">Xóa</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr class="list-item">
                 <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <td colspan="2">Mark</td>
+                <td class="deadline">Otto</td>
+                <td class="status">@mdo</td>
+                <td class="edit">@mdo</td>
+                <td class="delete">@mdo</td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              
             </tbody>
           </table>
     </div>
+    <img class="footer" src="./image/wave.svg" alt="footer">
+    </div>
     
-    
-
     
     <script src="./js/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="./js/slick.min.js"></script>
-    <script src="./js/index.js"></script>
     <script src="./js/app.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 </html>

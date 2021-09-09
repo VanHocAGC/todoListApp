@@ -1,199 +1,202 @@
-$(document).ready(function(){
-    $('.autoplay').slick({
-      slidesToShow:6,
-      slidesToScroll:1,
-      autoplay:true,
-      arrows:false,
-      infinite: true,
-      autoplaySpeed:2000,
-      responsive: [
-        {
-          breakpoint: 1160,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 1,
-          }
-        },
-        {
-          breakpoint: 994,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-          }
-        },
-      ]
-    });
-});
- 
-const nameValidate = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹýÝ\s]+$/
-const emailValidate = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const phoneValidate = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/
-var isName = false;
-var isEmail = false;
-var isPhone = false;
-var isPassword = false;
-var isPaswordConfirm = false;
-var formElement = document.querySelectorAll('.form-item input,textarea,select')
+const accountValidate = /^[a-zA-Z0-9]{6,20}$/
+//user constructor
+function User(account, password, taskList){
+  this.account = account;
+  this.password = password;
+  this.taskList = taskList;
+}
+//set default localStorage
+var usertest = new User('hello','iam','vanhoc');
+let isName = false;
+let isPassword =false;
+let isPasswordConfirm = false;
 var arr = [];
-
-var arrToCheckEmpty = JSON.parse(localStorage.getItem('customer'))
+var arrToCheckEmpty = JSON.parse(localStorage.getItem('user'))
 if(arrToCheckEmpty == null){
-  localStorage.setItem('customer' , JSON.stringify([1]))
+  localStorage.setItem('user' , JSON.stringify([usertest]))
+  localStorage.setItem('logged' , JSON.stringify(false))
 }
-arr = JSON.parse(localStorage.getItem('customer'))
-
-//show loading
-function loadpage(){
-  let loading = document.querySelector('.submit-loading')
-  loading.style.display = 'flex'
-  setTimeout(function() {
-      loading.style.display = 'none'
-  },2000)
-}
-function showSuccess(){
-  let succes = document.querySelector('.succes')
-    succes.style.display = 'flex'
-    setTimeout(function() {
-      succes.style.display = 'none'
-    },4000)
-}
-function showfail(){
-  let fail = document.querySelector('.fail')
-    fail.style.display = 'flex'
-    setTimeout(function() {
-      fail.style.display = 'none'
-    },4000)
-}
+arr = JSON.parse(localStorage.getItem('user'))
+let logged = JSON.parse(localStorage.getItem('logged'))
 
 //validate
 function checkName(name){
-  if(!nameValidate.test(name.value) && name.value != ''){
+  if(!accountValidate.test(name.value) && name.value != ''){
     name.parentElement.classList.add('invalid')
+    name.parentElement.classList.remove('valid')
     isName = false
-  }else{
+  }else if(name.value != ''){
+    name.parentElement.classList.add('valid')
     name.parentElement.classList.remove('invalid')
     isName = true
-  }
-}
-function checkEmail(emailParameter){
-  if(!emailValidate.test(emailParameter.value)&& emailParameter.value != ''){
-    emailParameter.parentElement.classList.add('invalid')
-    isEmail = false
   }else{
-    emailParameter.parentElement.classList.remove('invalid')
-    isEmail = true
+    name.parentElement.classList.remove('invalid')
+    name.parentElement.classList.remove('valid')
+    isName = false
   }
 }
-function checkPhone(phone){
-  if(!phoneValidate.test(phone.value) && phone.value !=''){
-    phone.parentElement.classList.add('invalid')
-    isPhone = false
-  }else{
-    phone.parentElement.classList.remove('invalid')
-    isPhone = true
-  }
-}
-function checkpass(password){
-  if(password.value.length<8 && password.value !=''){
+
+function checkPassword(password){
+  if(password.value.trim().length < 8 && password.value != ''){
     password.parentElement.classList.add('invalid')
+    password.parentElement.classList.remove('valid')
     isPassword = false
-  }else{
+  }else if(password.value != ''){
+    password.parentElement.classList.add('valid')
     password.parentElement.classList.remove('invalid')
     isPassword = true
+  }else{
+    password.parentElement.classList.remove('invalid')
+    password.parentElement.classList.remove('valid')
+    isPassword = false
   }
 }
-function checkEmpty(something){
-   return something.value==''?true:false
-}
-function checkpw(passwordConfirm){
-  let password = document.querySelector('.pass')
-  if(password.value!=passwordConfirm.value&& passwordConfirm.value.length!=0){
+function checkPasswordConfirm(passwordConfirm){
+  let password = document.querySelector('.password-input-signup')
+  console.log(passwordConfirm.value.trim() == password.value.trim())
+  if(passwordConfirm.value.trim() != password.value.trim() && passwordConfirm.value.trim() != ''){
     passwordConfirm.parentElement.classList.add('invalid')
-    isPaswordConfirm = false
+    passwordConfirm.parentElement.classList.remove('valid')
+    isPasswordConfirm = false
+  }else if(passwordConfirm.value != ''){
+    passwordConfirm.parentElement.classList.add('valid')
+    passwordConfirm.parentElement.classList.remove('invalid')
+    isPasswordConfirm = true
   }else{
     passwordConfirm.parentElement.classList.remove('invalid')
-    isPaswordConfirm = true
+    passwordConfirm.parentElement.classList.remove('valid')
+    isPasswordConfirm = false
   }
 }
-function checkEmailExist(emailParameter){
-  for(let item = 0 ; item < arr.length ; item++){
-    if(arr[item].email == emailParameter){
+function checkNameExist(name){
+  for(let i = 0; i < arr.length ;i++){
+    if(name == arr[i].account){
       return true;
     }
   }
   return false;
 }
-
-//add to localStorage
-
-function addToStorage(){
-  arr = JSON.parse(localStorage.getItem('customer'))
-  let name1 = formElement[0].value
-  let email1 = formElement[1].value
-  let phone1 = formElement[2].value
-  let brand1 = formElement[3].value
-  let product1 = formElement[4].value
-  let link1 = formElement[5].value
-  let account1 = formElement[6].value
-  let password1 = formElement[7].value
-  let repassword1 = formElement[8].value
-  let customer = {
-    name:name1,
-    email:email1,
-    phone:phone1,
-    brand:brand1,
-    product:product1,
-    link:link1,
-    account:account1,
-    password:password1,
-    repassword:repassword1,
-  }
-  loadpage()
-  if(!checkEmailExist(email1) &&isName &&isEmail &&isPhone &&isPassword &&isPaswordConfirm){
-    showSuccess()
-    arr.push(customer)
-    localStorage.setItem('customer' , JSON.stringify(arr))
-    for(var i = 0 ; i < formElement.length ; i++){
-      formElement[i].value = ''
+function checkAccountExists(name,password){
+  for(let i = 0; i < arr.length ;i++){
+    if(name == arr[i].account && password == arr[i].password){
+      return true;
     }
-  }else{
-    showfail()
   }
+  return false;
+}
+//action
+function showSignup(){
+  document.querySelector('.login').classList.add('login-box-hide')
+  document.querySelector('.signup').classList.add('signup-box-show')
+}
+function showRetake(){
+  document.querySelector('.login').classList.add('login-box-hide')
+  document.querySelector('.retake').classList.add('retake-box-show')
+}
+function returnLogin(){
+  document.querySelector('.login').classList.remove('login-box-hide')
+  document.querySelector('.retake').classList.remove('retake-box-show')
+}
+function returnLoginSignup(){
+  document.querySelector('.login').classList.remove('login-box-hide')
+  document.querySelector('.signup').classList.remove('signup-box-show')
 }
 
 
-function saveFunc(){
-  let formElement = document.querySelectorAll('.form-item input,textarea,select')
-  checkName(formElement[0]);
-  checkEmail(formElement[1]);
-  checkPhone(formElement[2]);
-  checkpass(formElement[7]);
-  checkpw(formElement[8]);
-  function checkEmailchangedValid(){
-    for(var i = 1 ; i < arr.length;i++){
-      if(arr[i].email == formElement[1].value && i!=x){
-        return false
+//action with localStorage
+
+//sign up
+function submitAccount(){
+  let userInfor = document.querySelectorAll('.signup .login-input input')
+  if(isName && isPassword && isPasswordConfirm){
+    if(!checkNameExist(userInfor[0].value)){
+      showSuccess('Đăng ký');
+      var users = new User(userInfor[0].value,userInfor[1].value,[])
+      arr.push(users)
+      localStorage.setItem("user" , JSON.stringify(arr))
+    }else{
+      //"đã" hoặc "không"
+      showNameExited('đã')
+    }
+  }else{
+    showfailFormat()
+  }
+}
+//login
+function submitLogin(){
+  let userInfor = document.querySelectorAll('.login .login-input input')
+  if(isName && isPassword){
+    if(checkNameExist(userInfor[0].value)){
+      if(checkAccountExists(userInfor[0].value,userInfor[1].value)){
+        showSuccess('Đăng nhập');
+        logged = true
+        localStorage.setItem("logged" , JSON.stringify(logged))
+      }else{
+        showPasswordfail()
       }
+    }else{
+      //"đã" hoặc "không"
+      showNameExited('không')
     }
-    return true;
-  }
-  if(isName &&isEmail &&isPhone &&isPassword &&isPaswordConfirm && checkEmailchangedValid()){
-    loadpage();
-    arr[x].name = formElement[0].value
-    arr[x].email = formElement[1].value
-    arr[x].phone = formElement[2].value
-    arr[x].brand = formElement[3].value
-    arr[x].product = formElement[4].value
-    arr[x].link = formElement[5].value
-    arr[x].account = formElement[6].value
-    arr[x].password = formElement[7].value
-    arr[x].repassword = formElement[8].value
-    localStorage.setItem('customer' , JSON.stringify(arr))
-    location.reload();
-    showSuccess()
   }else{
-    loadpage();
-    showfail();
+    showfailFormat()
   }
 }
+//retake password
+function retakePassword(){
+  let userInfor = document.querySelector('.retake .login-input input')
+  if(isName){
+    if(checkNameExist(userInfor.value)){
+      showSuccess('Lấy lại mật khẩu');
+      
+    }else{
+      //"đã" hoặc "không"
+      showNameExited('không')
+    }
+  }else{
+    showfailFormat()
+  }
+}
+//alert box
+function showSuccess(typeBox){
+  let success = document.querySelector('.login-success')
+  let successDivInner = document.querySelector('.login-success div')
+  successDivInner.innerHTML = `<p>${typeBox} thành công <i class="fas fa-check-circle"></i></p>`
+  success.style.display = 'flex';
+  setTimeout(function(){
+    success.style.display = 'none';
+    successDivInner.innerHTML = '';
+  },2500)
+}
+function showNameExited(existOrNot){
+  let fail = document.querySelector('.login-fail')
+  let failDivInner = document.querySelector('.login-fail div')
+  failDivInner.innerHTML = `<p>Tên tài khoản ${existOrNot} tồn tại <i class="fas fa-exclamation-triangle"></i></p>`
+  fail.style.display = 'flex';
+  setTimeout(function(){
+    fail.style.display = 'none';
+    failDivInner.innerHTML = '';
+  },2500)
+}
 
+function showfailFormat(){
+  let fail = document.querySelector('.login-fail')
+  let failDivInner = document.querySelector('.login-fail div')
+  failDivInner.innerHTML = `<p>Vui lòng kiểm tra lại định dạng nhập vào <i class="fas fa-exclamation-triangle"></i></p>`
+  fail.style.display = 'flex';
+  setTimeout(function(){
+    fail.style.display = 'none';
+    failDivInner.innerHTML = '';
+  },2500)
+}
+
+function showPasswordfail(){
+  let fail = document.querySelector('.login-fail')
+  let failDivInner = document.querySelector('.login-fail div')
+  failDivInner.innerHTML = `<p>Mật khẩu không chính xác <i class="fas fa-exclamation-triangle"></i></p>`
+  fail.style.display = 'flex';
+  setTimeout(function(){
+    fail.style.display = 'none';
+    failDivInner.innerHTML = '';
+  },2500)
+}
