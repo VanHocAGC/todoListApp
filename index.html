@@ -39,17 +39,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="list-item">
-                <th scope="row">1</th>
-                <th colspan="2">Mark</th>
-                <td colspan="2">Mark</td>
-                <td class="deadline">Otto</td>
-                <td class="status">@mdo</td>
-                <td class="edit">
-                    <div class="btn btn-warning px-5 py-2" onclick="showform()">Sửa</div>
-                    <div class="btn btn-danger px-5 py-2">Xóa</div>
-                </td>
-              </tr>
             </tbody>
           </table>
     </div>
@@ -63,7 +52,7 @@
         <div>
         </div>
     </div>
-    <form style="display: none">
+    <form style="display: none" onsubmit="submitInfor()">
         <button type="button" class="btn btn-danger" onclick="hideForm()" style="margin-left: 28%;"><i class="fas fa-times"></i></button>
         <div class="mb-3 ">
           <label for="exampleInputEmail1" class="form-label">Tên công việc</label>
@@ -79,10 +68,10 @@
          </div>
          <div>
             <label for="exampleInputPassword1" class="form-label">Trạng thái</label>
-            <select class="form-select" aria-label="Default select example">
-                <option value="1">Đang làm</option>
-                <option value="2">Đã hoàn thành</option>
-                <option value="3">Loại bỏ</option>
+            <select class="form-select form-control" aria-label="Default select example">
+                <option value="Đang làm">Đang làm</option>
+                <option value="Đã hoàn thành">Đã hoàn thành</option>
+                <option value="Loại bỏ">Loại bỏ</option>
               </select>
          </div>
         <button type="submit" class="btn btn-success" >Submit</button>

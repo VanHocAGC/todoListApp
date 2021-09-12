@@ -386,7 +386,7 @@ form{
   height: 100vh;
   width: 100% ;
   position: absolute; 
-  z-index: 123; 
+  z-index: 12; 
   background-color: #abfdf6d0;
   display:flex;
   justify-content:center;
