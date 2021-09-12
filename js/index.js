@@ -1,4 +1,5 @@
 const accountValidate = /^[a-zA-Z0-9]{6,20}$/
+
 //user constructor
 function User(account, password, taskList){
   this.account = account;
@@ -11,12 +12,16 @@ let isName = false;
 let isPassword =false;
 let isPasswordConfirm = false;
 var arr = [];
+
 var arrToCheckEmpty = JSON.parse(localStorage.getItem('user'))
 if(arrToCheckEmpty == null){
   localStorage.setItem('user' , JSON.stringify([usertest]))
   localStorage.setItem('logged' , JSON.stringify(false))
 }
 arr = JSON.parse(localStorage.getItem('user'))
+function resetLogged(){
+  localStorage.setItem('logged' , JSON.stringify(false))
+}
 let logged = JSON.parse(localStorage.getItem('logged'))
 
 //validate
@@ -84,6 +89,14 @@ function checkAccountExists(name,password){
   }
   return false;
 }
+function findPassword(name){
+  for(let i = 0; i < arr.length ;i++){
+    if(name == arr[i].account){
+      return arr[i].password;
+    }
+  }
+  return '';
+}
 //action
 function showSignup(){
   document.querySelector('.login').classList.add('login-box-hide')
@@ -103,14 +116,12 @@ function returnLoginSignup(){
 }
 
 
-//action with localStorage
-
-//sign up
+//action with login
 function submitAccount(){
   let userInfor = document.querySelectorAll('.signup .login-input input')
   if(isName && isPassword && isPasswordConfirm){
     if(!checkNameExist(userInfor[0].value)){
-      showSuccess('Đăng ký');
+      showSuccess('Đăng ký thành công');
       var users = new User(userInfor[0].value,userInfor[1].value,[])
       arr.push(users)
       localStorage.setItem("user" , JSON.stringify(arr))
@@ -119,18 +130,20 @@ function submitAccount(){
       showNameExited('đã')
     }
   }else{
-    showfailFormat()
+    showfailFormat('Vui lòng kiểm tra định dạng nhập vào')
   }
 }
-//login
 function submitLogin(){
   let userInfor = document.querySelectorAll('.login .login-input input')
   if(isName && isPassword){
     if(checkNameExist(userInfor[0].value)){
       if(checkAccountExists(userInfor[0].value,userInfor[1].value)){
-        showSuccess('Đăng nhập');
+        showSuccess('Đăng nhập thành công');
         logged = true
         localStorage.setItem("logged" , JSON.stringify(logged))
+        localStorage.setItem("working" , JSON.stringify(userInfor[0].value))
+        sessionStorage.setItem('live', 'true')
+        window.location.replace("http://127.0.0.1:5500/index.html")
       }else{
         showPasswordfail()
       }
@@ -139,29 +152,33 @@ function submitLogin(){
       showNameExited('không')
     }
   }else{
-    showfailFormat()
+    showfailFormat('Vui lòng kiểm tra định dạng nhập vào')
   }
 }
-//retake password
 function retakePassword(){
   let userInfor = document.querySelector('.retake .login-input input')
   if(isName){
     if(checkNameExist(userInfor.value)){
-      showSuccess('Lấy lại mật khẩu');
-      
+      showSuccess('Lấy lại mật khẩu thành công');
+      document.querySelector('.password-retake').innerHTML=`<p >Mật khẩu của bạn</p><h5 style = "color:#fdb797;margin-top: 10px;">${findPassword(userInfor.value)}</h5>`
+      setTimeout(function() {
+        document.querySelector('.password-retake').innerHTML=''
+      },12000)
     }else{
       //"đã" hoặc "không"
       showNameExited('không')
     }
   }else{
-    showfailFormat()
+    showfailFormat('Vui lòng kiểm tra định dạng nhập vào')
   }
 }
+
+
 //alert box
 function showSuccess(typeBox){
   let success = document.querySelector('.login-success')
   let successDivInner = document.querySelector('.login-success div')
-  successDivInner.innerHTML = `<p>${typeBox} thành công <i class="fas fa-check-circle"></i></p>`
+  successDivInner.innerHTML = `<p>${typeBox} <i class="fas fa-check-circle"></i></p>`
   success.style.display = 'flex';
   setTimeout(function(){
     success.style.display = 'none';
@@ -179,10 +196,10 @@ function showNameExited(existOrNot){
   },2500)
 }
 
-function showfailFormat(){
+function showfailFormat(content){
   let fail = document.querySelector('.login-fail')
   let failDivInner = document.querySelector('.login-fail div')
-  failDivInner.innerHTML = `<p>Vui lòng kiểm tra lại định dạng nhập vào <i class="fas fa-exclamation-triangle"></i></p>`
+  failDivInner.innerHTML = `<p>${content} <i class="fas fa-exclamation-triangle"></i></p>`
   fail.style.display = 'flex';
   setTimeout(function(){
     fail.style.display = 'none';
@@ -200,3 +217,5 @@ function showPasswordfail(){
     failDivInner.innerHTML = '';
   },2500)
 }
+
+// export {showSuccess,showfailFormat}

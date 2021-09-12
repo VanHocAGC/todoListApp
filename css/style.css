@@ -229,18 +229,16 @@ h5:hover{
 }
 .login-fail-format div p{
   font-size:3.4rem;
-  
 }
 .login-fail-format div p i{
   color: #ff534d;
   font-size: 3.4rem;
-  
 }
 .login-fail{
   height: 100vh;
   width: 100% ;
   position: absolute; 
-  z-index: 123; 
+  z-index: 123456; 
   background-color: #ffa6a6d0;
   display:flex;
   justify-content:center;
@@ -322,8 +320,8 @@ h5:hover{
 .add-task{
   width:150px;
   height:40px;
-  align-self: flex-end;
-  margin:0px 100px 20px 0px;
+  align-self: flex-start;
+  margin:0px 0px 20px 100px;
   font-size: 1.4rem;
   font-weight: 700;
   background-image: linear-gradient(to right,#32bef8 , #38d39f,#32be8f);
@@ -333,5 +331,87 @@ h5:hover{
   transition: 0.5s ease;
 }
 .add-task:hover{
+  background-position: right;
+}
+.user-infor-box{
+  height:80px;
+  width:auto;
+  position: absolute;
+  right: 180px;
+  top: 20px;
+}
+.user-infor-box>h5{
+  height:50px;
+  width:200px;
+  border-radius:10px;
+  position: absolute;
+  box-shadow:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  bottom: -70px;
+  right:0px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.user-infor{
+  height:80px;
+  width:auto;
+  box-shadow:rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-evenly;
+  align-items: center;
+  padding:0px 50px;
+}
+.user-infor img{
+  height:60%;
+}
+.user-infor p {
+  font-size:2rem;
+  font-weight: 600;
+  margin-right: 30px;
+}
+.user-infor button{
+  border: none;
+  background-color: transparent;
+  font-size:2rem;
+  margin-left: 8px;
+  transition: transform 0.3s linear ;
+
+}
+.user-infor button:focus{
+ transform:rotate(180deg);
+ transition: transform 0.3s linear ;
+}
+form{
+  height: 100vh;
+  width: 100% ;
+  position: absolute; 
+  z-index: 123; 
+  background-color: #abfdf6d0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  top: 0px;
+  flex-direction: column;
+  font-size:2rem;
+}
+form div{
+  width:30%;
+}
+form input, form select{
+  height:32px;
+  width: 700px;
+  font-size: 1.6rem !important;
+}
+form .btn-success{
+  padding:10px 38px;
+  margin-top: 20px;
+  background-image: linear-gradient(to right,#32bef8 , #38d39f,#32be8f);
+  background-size: 200%;
+  border: none;
+  font-size:1.6rem;
+  transition: 0.5s ease;
+}
+form .btn-success:hover{
   background-position: right;
 }

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./css/style.css" />
     <title>Login</title>
 </head>
-<body >
+<body onload="resetLogged()">
     <!-- login -->
     <div class="login-page">
         <div class="login-success" style="  display:none;">
@@ -107,10 +107,8 @@
                     <span class = "wrong-message">Tên tài khoản chỉ bảo gồm chữ và số(nhiều hơn 5 ký tự )</span>
                     <span class="right-message">Nice!</span>
                 </div>
-                <div class="password ">
+                <div class="password-retake">
                     
-                    <p >Mật khẩu của bạn</p>
-                    <h5 style = "color:#fdb797;margin-top: 10px;">alo</h5>
                 </div>
                 <div class="sign-up" style="justify-content:flex-end">
                     <h5 onclick="returnLogin()">quay lại trang đăng nhập</h5>
@@ -125,6 +123,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="./js/slick.min.js"></script>
-    <script src="./js/index.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
 </body>
 </html>
