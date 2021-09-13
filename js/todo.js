@@ -3,6 +3,7 @@ let isLive = JSON.parse(sessionStorage.getItem("live"))
 let arr = JSON.parse(localStorage.getItem("user")) || []
 let userNow = arr.find(obj=>obj.account==userWorking);
 let userTask = document.querySelectorAll('.form-control')
+let index = 0
 function UserTasks(name, description, deadline,status){
     this.name = name,
     this.description = description,
@@ -13,13 +14,7 @@ function UserTasks(name, description, deadline,status){
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-function showform(){
-    document.querySelector('form').style.display = 'flex';
-}
-function hideForm(){
-    document.querySelector('form').style.display = 'none';
-    clearForm();
-}
+
 function clearForm(){
     for(let i = 0; i < userTask.length-1 ;i++){
         userTask[i].value = ''
@@ -37,26 +32,9 @@ function submitInfor(){
     userNow.taskList.push(newTask)
     updateUser();
     localStorage.setItem("user" , JSON.stringify(arr))
+    hideForm()
+    showTask()
 }
-function showTask(){
-    let tableBody = document.querySelector('tbody')
-    let content = ''
-    for (let i = 0; i < userNow.taskList.length ; i++){
-        content +=(`<tr class="list-item">
-        <th scope="row">${i+1}</th>
-        <th colspan="2">${userNow.taskList[i].name}</th>
-        <td colspan="2">${userNow.taskList[i].description}</td>
-        <td class="deadline">${userNow.taskList[i].deadline}</td>
-        <td class="status">${userNow.taskList[i].status}</td>
-        <td class="edit">
-            <div class="btn btn-warning px-5 py-2" onclick="showformEdit(this)">Sửa</div>
-            <div class="btn btn-danger px-5 py-2" onclick="removeTask(this)">Xóa</div>
-        </td></tr>`)
-    }
-    tableBody.innerHTML =content
-}
-showTask()
-
 function showformEdit(task){
     showform();
     let choosedTask = task.parentElement.parentElement.querySelectorAll('th,td')
@@ -64,6 +42,18 @@ function showformEdit(task){
     userTask[1].value = choosedTask[2].innerHTML
     userTask[2].value = choosedTask[3].innerHTML
     userTask[3].value = choosedTask[4].innerHTML
+    let submitButton = document.querySelector('form')
+    submitButton.setAttribute('onsubmit','changeInfor()  ; return false')
+    index = (choosedTask[0].innerHTML)-1
+}
+
+function changeInfor(){
+    let editedTask = new UserTasks(userTask[0].value,userTask[1].value,userTask[2].value,userTask[3].value)
+    userNow.taskList.splice(index,1,editedTask);
+    updateUser();
+    localStorage.setItem("user" , JSON.stringify(arr))
+    hideForm()
+    showTask()
 }
 function removeTask(task){
     let choosedTask = task.parentElement.parentElement.querySelectorAll('th,td')
@@ -84,6 +74,13 @@ async function checkLogged(){
 }
 
 //logout
+async function logout(){
+    showSuccess(`Đăng xuất thành công`);
+    sessionStorage.setItem('live', 'false')
+    await sleep(1000);
+    window.location.replace("http://127.0.0.1:5500/login.html")
+}
+//show
 function showLogout(){
     let logoutButton = document.querySelector('.user-infor-box h5')
     if(logoutButton.style.display == 'none'){
@@ -91,12 +88,6 @@ function showLogout(){
     }else{
         logoutButton.style.display = 'none'
     }
-}
-async function logout(){
-    showSuccess(`Đăng xuất thành công`);
-    sessionStorage.setItem('live', 'false')
-    await sleep(1000);
-    window.location.replace("http://127.0.0.1:5500/login.html")
 }
 function showSuccess(typeBox){
     let success = document.querySelector('.login-success')
@@ -119,3 +110,30 @@ function showfailFormat(content){
         failDivInner.innerHTML = '';
     },2500)
 }
+function showform(){
+    let formEl = document.querySelector('form');
+    formEl.style.display = 'flex';
+    formEl.setAttribute('onsubmit', 'submitInfor() ; return false')
+}
+function hideForm(){
+    document.querySelector('form').style.display = 'none';
+    clearForm();
+}
+function showTask(){
+    let tableBody = document.querySelector('tbody')
+    let content = ''
+    for (let i = 0; i < userNow.taskList.length ; i++){
+        content +=(`<tr class="list-item">
+        <th scope="row">${i+1}</th>
+        <th colspan="2">${userNow.taskList[i].name}</th>
+        <td colspan="2">${userNow.taskList[i].description}</td>
+        <td class="deadline">${userNow.taskList[i].deadline}</td>
+        <td class="status">${userNow.taskList[i].status}</td>
+        <td class="edit">
+            <div class="btn btn-warning px-5 py-2" onclick="showformEdit(this)">Sửa</div>
+            <div class="btn btn-danger px-5 py-2" onclick="removeTask(this)">Xóa</div>
+        </td></tr>`)
+    }
+    tableBody.innerHTML =content
+}
+showTask()
