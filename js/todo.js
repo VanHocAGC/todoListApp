@@ -43,6 +43,7 @@ function submitInfor(){
     localStorage.setItem("user" , JSON.stringify(arr))
     hideForm()
     showTask()
+    showPagination()
 }
 function showformEdit(task){
     showform();
@@ -70,6 +71,7 @@ function removeTask(task){
     updateUser()
     localStorage.setItem("user" , JSON.stringify(arr))
     showTask()
+    showPagination();
 }
 async function checkLogged(){
     if(!isLive){
@@ -128,7 +130,6 @@ function hideForm(){
     clearForm();
 }
 function showTask(){
-    showPagination();
     let tableBody = document.querySelector('tbody')
     let content = ''
     let color
@@ -178,7 +179,7 @@ function showPagination(){
     paginationItem = document.querySelectorAll('.page-numbering div')
     currentPage = document.querySelector('.page-numbering .active').innerHTML
 }
-
+showPagination();
 function nextPage(){
     for(let i = 0; i < paginationItem.length-1; i++){
         if(paginationItem[i].innerHTML == currentPage){
@@ -188,6 +189,7 @@ function nextPage(){
             break;
         }
     }
+    showTask()
 }
 function prevPage(){
     for(let i = 1; i < paginationItem.length; i++){
@@ -198,11 +200,13 @@ function prevPage(){
             break;
         }
     }
+    showTask()
 }
 function beActive(page){
     removeActive()
     page.classList.add('active')
     currentPage = document.querySelector('.page-numbering .active').innerHTML
+    showTask()
 }
 function removeActive(){
     for(let i = 0; i <paginationItem.length ; i++){
