@@ -77,7 +77,7 @@ async function checkLogged(){
     if(!isLive){
         showfailFormat("Vui lòng đăng nhập")
         await sleep(1000);
-        window.location.replace("http://127.0.0.1:5500/login.html")
+        window.location.replace("https://vanhocagc.github.io/todoListApp/login.html")
     }else{
         showSuccess(`Xin chào ${userWorking}`)
         document.querySelector('.user-infor').innerHTML =`<p>${userWorking}</p> <img src="./image/undraw_profile_pic_ic5t.svg" alt="user infor"><button onclick="showLogout()"><i class="fas fa-chevron-down"></i></button>`
@@ -89,7 +89,7 @@ async function logout(){
     showSuccess(`Đăng xuất thành công`);
     sessionStorage.setItem('live', 'false')
     await sleep(1000);
-    window.location.replace("http://127.0.0.1:5500/login.html")
+    window.location.replace("https://vanhocagc.github.io/todoListApp/login.html")
 }
 //show
 function showLogout(){

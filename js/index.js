@@ -145,7 +145,7 @@ function submitLogin(){
         localStorage.setItem("logged" , JSON.stringify(logged))
         localStorage.setItem("working" , JSON.stringify(userInfor[0].value))
         sessionStorage.setItem('live', 'true')
-        window.location.replace("http://127.0.0.1:5500/index.html")
+        window.location.replace("https://vanhocagc.github.io/todoListApp/index.html")
       }else{
         showPasswordfail()
       }
