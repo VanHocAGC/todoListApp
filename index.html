@@ -40,9 +40,16 @@
             </thead>
             <tbody>
             </tbody>
-          </table>
-    </div>
-    <img class="footer" src="./image/wave.svg" alt="footer">
+        </table>
+        <div class="paginatoin">
+          <div class="prev" onclick="prevPage()">prev</div>
+          <div class="page-numbering">
+            <div class="page active" onclick="beActive(this)">1</div>
+          </div>
+          <div class="next" onclick="nextPage()">next</div>
+        </div>
+      </div>
+      <img class="footer" src="./image/wave.svg" alt="footer">
     </div>
     <div class="login-success" style="top: 0px;left: 0px; display: none;">
         <div>
@@ -71,7 +78,7 @@
             <select class="form-select form-control" aria-label="Default select example">
                 <option value="Đang làm">Đang làm</option>
                 <option value="Đã hoàn thành">Đã hoàn thành</option>
-                <option value="Loại bỏ">Loại bỏ</option>
+                <option value="Tạm dừng">Tạm dừng</option>
               </select>
          </div>
         <button type="submit" class="btn btn-success" >Submit</button>

@@ -4,6 +4,15 @@ let arr = JSON.parse(localStorage.getItem("user")) || []
 let userNow = arr.find(obj=>obj.account==userWorking);
 let userTask = document.querySelectorAll('.form-control')
 let index = 0
+//pagination variable
+const perTaskInPage = 4
+let taskLength
+let pageLength
+let prev = document.querySelector('.prev')
+let next = document.querySelector('.next')
+let pagination 
+let paginationItem
+let currentPage=document.querySelector('.page-numbering .active').innerHTML
 function UserTasks(name, description, deadline,status){
     this.name = name,
     this.description = description,
@@ -97,8 +106,7 @@ function showSuccess(typeBox){
     setTimeout(function(){
       success.style.display = 'none';
       successDivInner.innerHTML = '';
-      
-    },2500)
+    },2000)
 }
 function showfailFormat(content){
     let fail = document.querySelector('.login-fail')
@@ -120,10 +128,24 @@ function hideForm(){
     clearForm();
 }
 function showTask(){
+    showPagination();
     let tableBody = document.querySelector('tbody')
     let content = ''
-    for (let i = 0; i < userNow.taskList.length ; i++){
-        content +=(`<tr class="list-item">
+    let color
+    let backgroundColor
+    let chooseToCount = ((parseInt(currentPage))*4)>(userNow.taskList.length)?userNow.taskList.length:((parseInt(currentPage))*4)
+    for (let i = (((parseInt(currentPage))-1)*4); i <chooseToCount ; i++){
+        color = "#00cba9"
+        backgroundColor = "#95ffed"
+        if(userNow.taskList[i].status=== "Tạm dừng"){
+            color = '#999'
+            backgroundColor = "#e9e9e9"
+        }else 
+        if(((new Date(userNow.taskList[i].deadline).getTime())+86400000) <= new Date().getTime() && userNow.taskList[i].status=== "Đang làm"){
+            color = '#ff384c'
+            backgroundColor="#ffb9b9"
+        }
+        content +=(`<tr class="list-item" style="border-left: 2px solid ${color}; background-color: ${backgroundColor};">
         <th scope="row">${i+1}</th>
         <th colspan="2">${userNow.taskList[i].name}</th>
         <td colspan="2">${userNow.taskList[i].description}</td>
@@ -137,3 +159,53 @@ function showTask(){
     tableBody.innerHTML =content
 }
 showTask()
+
+//pagination
+
+function showPagination(){
+    pagination = document.querySelector('.page-numbering')
+    taskLength = userNow.taskList.length
+    pageLength = Math.floor((taskLength-1)/perTaskInPage)+1
+    let paginationContent = ''
+    for (let i =0 ; i < pageLength ; i++){
+        if(i==0){
+            paginationContent+=`<div class="page active" onclick="beActive(this)">${i+1}</div>`
+        }else{
+            paginationContent+= `<div class="page" onclick="beActive(this)">${i+1}</div>`
+        }
+    }
+    pagination.innerHTML = paginationContent
+    paginationItem = document.querySelectorAll('.page-numbering div')
+    currentPage = document.querySelector('.page-numbering .active').innerHTML
+}
+
+function nextPage(){
+    for(let i = 0; i < paginationItem.length-1; i++){
+        if(paginationItem[i].innerHTML == currentPage){
+            removeActive()
+            paginationItem[i+1].classList.add('active')
+            currentPage = document.querySelector('.page-numbering .active').innerHTML
+            break;
+        }
+    }
+}
+function prevPage(){
+    for(let i = 1; i < paginationItem.length; i++){
+        if(paginationItem[i].innerHTML == currentPage){
+            removeActive()
+            paginationItem[i-1].classList.add('active')
+            currentPage = document.querySelector('.page-numbering .active').innerHTML
+            break;
+        }
+    }
+}
+function beActive(page){
+    removeActive()
+    page.classList.add('active')
+    currentPage = document.querySelector('.page-numbering .active').innerHTML
+}
+function removeActive(){
+    for(let i = 0; i <paginationItem.length ; i++){
+        paginationItem[i].classList.remove('active')
+    }
+}

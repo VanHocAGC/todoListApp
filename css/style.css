@@ -286,6 +286,7 @@ h5:hover{
   font-size:1.4rem;
   width: 90% ;
   margin: 0px auto;
+  z-index: 122;
 }
 .list-item td , .list-item th{
   padding: 20px 0px !important;
@@ -293,10 +294,11 @@ h5:hover{
 }
 .list-item{
   border-left: 2px solid #00cba9;
-  
   border-bottom: 10px solid transparent;
   border-radius:0px 5px 5px 0px;
+  background-color: #95ffed;
 }
+
 
 .list-image{
   position:absolute;
@@ -313,7 +315,7 @@ h5:hover{
 }
 .footer{
   position:absolute;
-  bottom: -100px;
+  bottom: -120px;
   z-index: 2;
 }
 
@@ -386,7 +388,7 @@ form{
   height: 100vh;
   width: 100% ;
   position: absolute; 
-  z-index: 12; 
+  z-index: 123; 
   background-color: #abfdf6d0;
   display:flex;
   justify-content:center;
@@ -414,4 +416,53 @@ form .btn-success{
 }
 form .btn-success:hover{
   background-position: right;
+}
+.paginatoin{
+  font-size: 1.6rem;
+  z-index: 122;
+  display:flex;
+  position: absolute;
+  top: 560px;
+  left: 0;
+  width:100%;
+  text-align: center;
+  justify-content:center;
+  user-select: none;
+}
+.paginatoin .prev ,.paginatoin .next {
+  background-color: #00cba9;
+  color:#fff;
+  width: 60px;
+  border-radius: 20px;
+  transition:transform 0.3s
+}
+.paginatoin .prev:hover 
+,.paginatoin .next:hover{
+  cursor: pointer;
+}
+.paginatoin .prev:hover{
+  transform: translateX(-5px);
+}
+.paginatoin .next:hover{
+  transform: translateX(5px);
+} 
+.paginatoin .next{
+  margin-left: 3px;
+}
+.page-numbering{
+  display: flex;
+}
+.page-numbering div{
+  border:1px solid #00CBA9;
+  width:40px;
+  height: 100%;
+  margin-left: 3px;
+  border-radius: 5px;
+}
+.page-numbering .active{
+  background-color:#00cba9;
+  color:#fff;
+}
+.page-numbering div:hover{
+  cursor: pointer;
 }

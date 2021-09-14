@@ -7,13 +7,14 @@ function User(account, password, taskList){
   this.taskList = taskList;
 }
 //set default localStorage
+
 var usertest = new User('hello','iam','vanhoc');
 let isName = false;
 let isPassword =false;
 let isPasswordConfirm = false;
 var arr = [];
-
 var arrToCheckEmpty = JSON.parse(localStorage.getItem('user'))
+
 if(arrToCheckEmpty == null){
   localStorage.setItem('user' , JSON.stringify([usertest]))
   localStorage.setItem('logged' , JSON.stringify(false))
@@ -40,7 +41,6 @@ function checkName(name){
     isName = false
   }
 }
-
 function checkPassword(password){
   if(password.value.trim().length < 8 && password.value != ''){
     password.parentElement.classList.add('invalid')
@@ -114,7 +114,9 @@ function returnLoginSignup(){
   document.querySelector('.login').classList.remove('login-box-hide')
   document.querySelector('.signup').classList.remove('signup-box-show')
 }
-
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 //action with login
 function submitAccount(){
